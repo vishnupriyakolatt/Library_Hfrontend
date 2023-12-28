@@ -1,16 +1,24 @@
 import React from 'react'
 
-import book1 from '../../assets/book1.jpg'
+import Background from "../../assets/background1.jpg";
 
-import Frame from "../../Components/Frame";
-
-function Category() {
+function CategoryView() {
   return (
-<>
-  <Frame delay={0.2} direction="down">
- 
-   
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 w-full mt-12 dark:bg-gray-800 ">
+  <>
+
+<div
+        className="h-60  flex flex-col items-center"
+        style={{
+          background: `url(${Background})`,
+          backgroundPosition: "bottom",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          
+        }}
+      /> 
+     
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 w-full mt-12 dark:bg-gray-800 ">
+
   <div
     class="relative overflow-hidden rounded-lg shadow-lg cursor-pointer m-4 dark:bg-gray-600 duration-300 ease-in-out transition-transform transform hover:-translate-y-2">
     <img class="object-cover w-full h-80"
@@ -56,10 +64,10 @@ function Category() {
 
 
 
-  </Frame>
-</>
 
+
+  </>
   )
 }
 
-export default Category
+export default CategoryView

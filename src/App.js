@@ -9,8 +9,9 @@ function App() {
    <>
 <BrowserRouter>
 <Routes>
+<Route path='/*' element={<Userroute/>}/>
 <Route path='/admin/*' element={<Adminroute/>}/>
-<Route path='/' element={<Userroute/>}/>
+
 </Routes>
 </BrowserRouter>
    
