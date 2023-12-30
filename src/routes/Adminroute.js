@@ -6,6 +6,8 @@ import BookAdd from '../Pages/Admin/BookAdd';
 import BookView from '../Pages/Admin/BookView';
 import AdminLogin from '../Pages/Admin/AdminLogin';
 import AdminSidebar from '../Components/AdminSidebar'
+import CategoryAdd from '../Pages/Admin/CategoryAdd';
+import CategoryView from '../Pages/Admin/CategoryView';
 
 function Adminroute() {
   return (
@@ -17,6 +19,8 @@ function Adminroute() {
        <Route path='/home' element={<AdminSidebar/>}/>
        <Route path='/bookadd' element={<BookAdd/>}/>
        <Route path='/bookview' element={<BookView/>}/>
+       <Route path='/categoryadd' element={<CategoryAdd/>}/>
+       <Route path='/categoryview' element={<CategoryView/>}/>
      </Routes>
    </Fragment>
   )
