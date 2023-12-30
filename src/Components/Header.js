@@ -26,12 +26,12 @@ const NavBar = ({ bg }) => {
       <Link to="service">Profile</Link>
     </ul>
 
-    <button
+    <Link to='/login'><button
       type="button"
       className="text-white mt-[-20px] bg-black hover:bg-white hover:text-black border hidden md:block cursor-pointer focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800 font-bold"
     >
       Login
-    </button>
+    </button></Link>
 
     <HiMenuAlt3
       size={30}

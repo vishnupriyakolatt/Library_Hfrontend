@@ -1,9 +1,10 @@
 import React from 'react'
-
+import Header from '../../Components/Header'
 import Background from "../../assets/background1.jpg";
 function AllBooks() {
   return (
 <>
+<Header/>
 <div
         className="h-60  flex flex-col items-center"
         style={{

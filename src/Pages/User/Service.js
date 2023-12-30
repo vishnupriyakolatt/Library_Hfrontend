@@ -1,10 +1,11 @@
 import React from 'react'
 import Frame from '../../Components/Frame'
 import { services } from '../../data'
-
+import Header from '../../Components/Header'
 function Service() {
   return (
 <>
+<Header/>
 <div id='services' className='mt-[100px] max-w-[1490px] mx-auto px-10 flex flex-col xs:flex-row gap-12 xs:gap-6 xs:justify-between w-full'>
 {
   services.map((Service,i)=>(

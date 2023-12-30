@@ -1,11 +1,11 @@
 import React from 'react'
 import { careTitle, careSubtitle, careList } from "../../data";
-
+import Header from '../../Components/Header'
 import Frame from "../../Components/Frame";
 function About() {
   return (
    <>
-   
+   <Header/>
    
    <div id="care" className="px-10 max-w-[1490px] mx-auto mb-[160px]">
       <Frame delay={0.2} direction="down">

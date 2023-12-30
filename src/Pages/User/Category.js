@@ -1,5 +1,5 @@
 import React from 'react'
-
+import Header from '../../Components/Header'
 import book1 from '../../assets/book1.jpg'
 
 import Frame from "../../Components/Frame";
@@ -7,6 +7,7 @@ import Frame from "../../Components/Frame";
 function Category() {
   return (
 <>
+<Header/>
   <Frame delay={0.2} direction="down">
  
    
