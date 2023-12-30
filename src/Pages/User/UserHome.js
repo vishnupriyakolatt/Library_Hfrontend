@@ -1,16 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 
-
+import axios from "axios";
 import Background from "../../assets/background1.jpg";
 
 import searchIcon from "../../assets/search-icon.svg";
 import { heroSubtitle, heroTitle } from "../../data";
 
 import Frame from "../../Components/Frame";
+import {  useNavigate } from "react-router-dom";
 
 
 function UserHome() {
-
+  const [searchTerm, setSearchTerm] = useState('');
+  const navigate=useNavigate()
+  const handleSearch = async () => {
+    if(!searchTerm)
+    alert('Please search');
+    try {
+ 
+      const response = await axios.post(`http://localhost:8080/api/book/search?name=${searchTerm}`);
+      console.log(response)
+      const data = response.data;
+      // setBooks(data);
+      if(data[0])
+      navigate(`/singlebook/${data[0]._id}`)
+      
+     
+    } catch (error) {
+      console.error('Error searching books:', error);
+   
+    }
+  };
 
   return (
     <>
@@ -40,12 +60,15 @@ function UserHome() {
           <input
             type="text"
             placeholder="Search"
+            value={searchTerm}
+            onChange={(e)=>setSearchTerm(e.target.value)}
             className="rounded-full w-full pl-6 pr-[68px] py-4 bg-primary outline-none text-white font-bold
               text-base xs:text-lg placeholder-white"
           />
           <img
             src={searchIcon}
             alt=""
+            onClick={handleSearch}
             className="absolute top-2/4 -translate-y-2/4 right-3 h-11 w-11 cursor-pointer"
           />
         </div>

@@ -7,10 +7,10 @@ function BookAdd() {
   const [ISBN, setISBN] = useState("");
   const [name, setName] = useState("");
   const [author, setAuthor] = useState("");
-  const [image, setImage] = useState(null); // Change to null to handle file input
+  const [image, setImage] = useState(null); 
 
   const [category, setCategory] = useState("");
-  const [categories, setCategories] = useState([]);
+ 
 
   
   const handleImageChange = (e) => {
@@ -26,7 +26,6 @@ function BookAdd() {
     formData.append('name', name);
     formData.append('author', author);
     formData.append('file', image);
-
     formData.append('category', category);
   
     try {
@@ -39,8 +38,7 @@ function BookAdd() {
       if (response.data.message) {
         navigate("/");
       } else if (response.data.err) {
-        console.error(response.data.err); // Log the error for debugging
-        // Optionally, you can show an error message to the user
+        console.error(response.data.err); 
       }
     } catch (error) {
       console.error(error);
@@ -124,13 +122,13 @@ function BookAdd() {
                 name="category"
                 id="category"
                 value={category}
-                onChange={(e) => setCategories(e.target.value)}
+                onChange={(e) => setCategory(e.target.value)}
               >
                 <option value="">Select Category</option>
-                <option>Classics</option>
-                <option>Detective and Mystery</option>
-                <option>Fantasy and Romance</option>
-                <option>Historical and Literary Fiction</option>
+                <option value="Classics">Classics</option>
+                <option value='Detective and Mystery'>Detective and Mystery</option>
+                <option value='Fantasy and Romance'>Fantasy and Romance</option>
+                <option value='Historical and Literary Fiction'>Historical and Literary Fiction</option>
               </select>
             </div>
            

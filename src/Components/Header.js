@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { HiMenuAlt3 } from 'react-icons/hi';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -6,11 +6,22 @@ import logo from '../assets/logo.svg';
 
 const NavBar = ({ bg }) => {
   const [showMenu, setShowMenu] = useState(false);
-
+  const [token, setToken] = useState('');
   const toggleMobileNav = () => {
     setShowMenu(!showMenu);
   };
 
+  const handlelogout=()=>{localStorage.removeItem('userToken')
+setToken('')
+
+}
+useEffect(()=>{
+ const tokenverify= localStorage.getItem('userToken')
+ if(tokenverify){
+  setToken(tokenverify)
+ }
+
+},[])
   return (
   <header className={`${bg ? 'bg-white py-2 lg:py-2' : 'bg-white'} fixed left-0 py-0 z-10 w-full transition-all duration-200 shadow-lg shadow-gray-500/40 `}>
   <div className="relative w-full max-w-[100] h-20 flex items-center justify-between pt-10 mx-auto px-10 shadow-lg shadow-gray-500/40 ">
@@ -26,13 +37,20 @@ const NavBar = ({ bg }) => {
       <Link to="service">Profile</Link>
     </ul>
 
-    <Link to='/login'><button
+   { token ?(<Link onClick={handlelogout} to='/'><button
+      type="button"
+      className="text-white mt-[-20px] bg-black hover:bg-white hover:text-black border hidden md:block cursor-pointer focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800 font-bold"
+    >
+    Logout
+    </button></Link>):(
+      <Link to='/login'><button
       type="button"
       className="text-white mt-[-20px] bg-black hover:bg-white hover:text-black border hidden md:block cursor-pointer focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800 font-bold"
     >
       Login
     </button></Link>
-
+    )
+}
     <HiMenuAlt3
       size={30}
       className="block md:hidden cursor-pointer text-black mt-[-38px]"
