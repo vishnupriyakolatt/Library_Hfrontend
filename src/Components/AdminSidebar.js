@@ -17,11 +17,11 @@ const AdminSidebar = () => {
     navigate('/admin/');
   };
   const menus = [
-    { name: "dashboard", link: "/", icon: MdOutlineDashboard },
-    { name: "Category", link: "/", icon: IoBookSharp },
-    { name: "Books", link: "/", icon: SiBookstack },
-    { name: "Users", link: "/", icon: AiOutlineUser},
-  
+    { name: "dashboard", link: "/admin/home", icon: MdOutlineDashboard },
+    { name: "Category", link: "/admin/categoryview", icon: IoBookSharp },
+    { name: "Books", link: "/admin/bookview", icon: SiBookstack },
+    { name: "Users", link: "/admin/users", icon: AiOutlineUser},
+    { name: "Transaction", link: "/admin/transactionview", icon: SiBookstack },
 
 
   ];

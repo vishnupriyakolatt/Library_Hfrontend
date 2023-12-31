@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import AdminSidebar from '../../Components/AdminSidebar';
 
 function Transaction() {
   const [ISBN, setISBN] = useState('');
@@ -22,13 +23,13 @@ function Transaction() {
   };
 
   return (
-    <div>
-      <div>
-        <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
+    <div className='flex'>
+      
+      <AdminSidebar/>
+      <div className="relative flex flex-col justify-center min-h-screen overflow-hidden w-full">
           <div className="w-full p-10 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
-            <h1 className="text-3xl text-center text-gray-900 font-bold mb-2">Transactions</h1>
-            <div></div>
-
+            <h1 className="text-3xl text-center text-gray-900 font-bold mb-2">ADD Category</h1>
+            <div className="relative">
             <div className="mb-2">
               <label htmlFor="ISBN" className="block text-sm font-semibold text-gray-800">
                 ISBN of Book
@@ -71,7 +72,8 @@ function Transaction() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+ 
   );
 }
 

@@ -44,7 +44,7 @@ function CategoryAdd() {
         <AdminSidebar/>
         <div className="relative flex flex-col justify-center min-h-screen overflow-hidden w-full">
           <div className="w-full p-10 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
-            <h1 className="text-3xl text-center text-gray-900 font-bold mb-2">ADD Category</h1>
+            <h1 className="text-3xl text-center text-gray-900 font-bold mb-2">ADD Transaction</h1>
             <div className="relative">
               <label
                 title="Click to upload"
