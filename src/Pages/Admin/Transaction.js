@@ -7,7 +7,7 @@ function Transaction() {
 
   const handleTransaction = async (action) => {
     try {
-      const response = await axios.post('http://localhost:8080/api/book/transaction', {
+      const response = await axios.post('http://localhost:8000/api/book/transaction', {
         ISBN,
         userEmail,
         action,

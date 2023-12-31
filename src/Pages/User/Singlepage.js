@@ -10,7 +10,7 @@ const id=useParams()
 const getsingleBook = async (id) => {
     try {
  
-        const response = await axios.post(`http://localhost:8080/api/book/search?name=${id}`);
+        const response = await axios.post(`http://localhost:8000/api/book/search?name=${id}`);
       console.log(response)
       const data = response.data;
       setBook(data[0]);

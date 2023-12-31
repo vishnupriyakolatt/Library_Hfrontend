@@ -19,7 +19,7 @@ function AdminRegister() {
 const handleSubmit = async (e) => {
   e.preventDefault();
   try {
-    const response = await axios.post('http://localhost:8080/api/admin/register', formData);
+    const response = await axios.post('http://localhost:8000/api/admin/register', formData);
     console.log('Response:', response.data);
     navigate('/admin/home');
   } catch (error) {

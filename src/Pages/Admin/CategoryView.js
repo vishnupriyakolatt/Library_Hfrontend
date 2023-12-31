@@ -10,7 +10,7 @@ function CategoryView() {
 
   const fetchBooks = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/book/viewCategory');
+      const response = await axios.get('http://localhost:8000/api/book/viewCategory');
       const data = response.data;
       setBooks(data);
     } catch (error) {

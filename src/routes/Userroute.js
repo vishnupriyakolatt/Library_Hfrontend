@@ -8,6 +8,7 @@ import AllBooks from '../Pages/User/AllBooks';
 import Login from '../Pages/User/Login';
 import Register from '../Pages/User/Register';
 import Singlepage from '../Pages/User/Singlepage';
+import Profiletransacrion from '../Pages/User/Profiletransacrion';
 
 
 function Userroute() {
@@ -22,6 +23,7 @@ function Userroute() {
     <Route path='/category' element={<CategoryView/>}/>
     <Route path='/allBooks' element={<AllBooks/>}/>
     <Route path='/singlebook/:id' element={<Singlepage/>}/>
+    <Route path='/profile' element={<Profiletransacrion/>}/>
   </Routes>
 </Fragment>
   )

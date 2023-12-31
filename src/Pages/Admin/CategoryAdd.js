@@ -14,7 +14,7 @@ function CategoryAdd() {
     formData.append('file', image);
 
     try {
-      const response = await axios.post('http://localhost:8080/api/book/addcategory', formData, {
+      const response = await axios.post('http://localhost:8000/api/book/addcategory', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
