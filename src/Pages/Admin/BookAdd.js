@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import AdminSidebar from '../../Components/AdminSidebar';  // Import your AdminSidebar component
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function BookAdd() {
   const navigate = useNavigate();
   const [ISBN, setISBN] = useState("");
   const [name, setName] = useState("");
   const [author, setAuthor] = useState("");
-  const [image, setImage] = useState(null); 
-
+  const [image, setImage] = useState(null);
   const [category, setCategory] = useState("");
- 
 
-  
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(file);
@@ -20,39 +20,47 @@ function BookAdd() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const formData = new FormData();
     formData.append('ISBN', ISBN);
     formData.append('name', name);
     formData.append('author', author);
     formData.append('file', image);
     formData.append('category', category);
-  
+
     try {
       const response = await axios.post('http://localhost:8000/api/book/addbook', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-  
+
       if (response.data.message) {
-        navigate("/");
+        navigate("/admin/bookview");
       } else if (response.data.err) {
-        console.error(response.data.err); 
+        console.error(response.data.err);
       }
     } catch (error) {
       console.error(error);
+      toast.error(
+        error?.response?.data?.msg ||
+          error?.message ||
+          "Something went wron ! please try again",
+        {
+          position: toast.POSITION.TOP_CENTER,
+        }
+      );
     }
-  };
+    }
   
 
   return (
     <>
-      <div>
-        <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
+      <div className='flex'>
+        <AdminSidebar />
+        <div className="relative flex flex-col justify-center min-h-screen overflow-hidden w-full">
           <div className="w-full p-10 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
             <h1 className="text-3xl text-center text-gray-900 font-bold mb-2">ADD BOOKS</h1>
-            <div></div>
             <div className="relative">
               <label
                 title="Click to upload"
@@ -78,7 +86,7 @@ function BookAdd() {
               <input hidden="" type="file" name="button2" id="button2" onChange={handleImageChange} />
             </div>
             <div className="mb-2">
-              <label htmlFor="password" className="block text-sm font-semibold text-gray-800">
+              <label htmlFor="ISBN" className="block text-sm font-semibold text-gray-800">
                 ISBN
               </label>
               <input
@@ -90,7 +98,7 @@ function BookAdd() {
               />
             </div>
             <div className="mb-2">
-              <label htmlFor="password" className="block text-sm font-semibold text-gray-800">
+              <label htmlFor="name" className="block text-sm font-semibold text-gray-800">
                 Name
               </label>
               <input
@@ -102,7 +110,7 @@ function BookAdd() {
               />
             </div>
             <div className="mb-2">
-              <label htmlFor="password" className="block text-sm font-semibold text-gray-800">
+              <label htmlFor="author" className="block text-sm font-semibold text-gray-800">
                 Author
               </label>
               <input
@@ -131,7 +139,6 @@ function BookAdd() {
                 <option value='Historical and Literary Fiction'>Historical and Literary Fiction</option>
               </select>
             </div>
-           
             <div className="mb-2">
               <button
                 onClick={handleSubmit}
@@ -142,12 +149,11 @@ function BookAdd() {
             </div>
           </div>
         </div>
+        <ToastContainer />
       </div>
     </>
   );
 }
 
 export default BookAdd;
-
-
 

@@ -34,7 +34,7 @@ useEffect(()=>{
       <Link to="/">Home</Link>
       <Link to="/category">Categories</Link>
       <Link to="/allBooks">All Books</Link>
-      <Link to="service">Profile</Link>
+      <Link to="/profile">Profile</Link>
     </ul>
 
    { token ?(<Link onClick={handlelogout} to='/'><button

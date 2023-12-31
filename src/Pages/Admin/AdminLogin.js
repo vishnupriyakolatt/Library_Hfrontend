@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function AdminLogin() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   const handleChange = (e) => {
@@ -18,16 +20,26 @@ function AdminLogin() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8000/api/admin/login', formData);
+      const response = await axios.post(
+        "http://localhost:8000/api/admin/login",
+        formData
+      );
+      console.log("Response:", response);
 
       if (response.data.token) {
-        localStorage.setItem('adminToken', response.data.token);
-        navigate('/admin/home');
-      } else {
-        console.error('Login failed. Please check your credentials.');
+        localStorage.setItem("adminToken", response.data.token);
+        navigate("/admin/home");
       }
     } catch (error) {
-      console.error('An error occurred. Please try again later.', error);
+      console.log("Error:", error);
+      toast.error(
+        error?.response?.data?.msg ||
+          error?.message ||
+          "Something went wrong ! please try again",
+        {
+          position: toast.POSITION.TOP_CENTER,
+        }
+      );
     }
   };
 
@@ -83,8 +95,17 @@ function AdminLogin() {
               </button>
             </div>
           </form>
+          <div className="mt-6">
+              <button
+                className="w-full px-4 py-2 tracking-wide font-bold text-xl text-black transition-colors duration-200 transform bg-white-900 rounded-md"
+                type="submit"
+              ><Link to='/admin/register'>Register Here</Link>
+            
+              </button>
+            </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

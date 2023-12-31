@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import AdminSidebar from "../../Components/AdminSidebar";
 
 function CategoryAdd() {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ function CategoryAdd() {
       });
       console.log(response);
       if (response.data.message) {
-        navigate("/");
+        navigate("/admin/categoryview");
       }
     } catch (error) {
       console.error(error);
@@ -39,12 +40,11 @@ function CategoryAdd() {
 
   return (
     <>
-      <div>
-        <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
+      <div className="flex">
+        <AdminSidebar/>
+        <div className="relative flex flex-col justify-center min-h-screen overflow-hidden w-full">
           <div className="w-full p-10 m-auto bg-white rounded-md shadow-md lg:max-w-xl">
-            <h1 className="text-3xl text-center text-gray-900 font-bold mb-2">
-              ADD BOOKS
-            </h1>
+            <h1 className="text-3xl text-center text-gray-900 font-bold mb-2">ADD Category</h1>
             <div className="relative">
               <label
                 title="Click to upload"

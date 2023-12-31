@@ -3,19 +3,27 @@ import { HiMenuAlt3 } from "react-icons/hi";
 import { MdOutlineDashboard } from "react-icons/md";
 import { AiOutlineUser } from "react-icons/ai";
 import { SiBookstack } from "react-icons/si";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoBookSharp } from "react-icons/io5";
 import { GiPartyFlags } from "react-icons/gi";
 import { IoIosLogOut } from "react-icons/io";
 
 const AdminSidebar = () => {
+  const navigate=useNavigate()
+  const handleLogout = () => {
+
+    localStorage.removeItem("adminToken");
+  
+    navigate('/admin/');
+  };
   const menus = [
     { name: "dashboard", link: "/", icon: MdOutlineDashboard },
     { name: "Category", link: "/", icon: IoBookSharp },
     { name: "Books", link: "/", icon: SiBookstack },
     { name: "Users", link: "/", icon: AiOutlineUser},
-    { name: "Events", link: "/", icon: GiPartyFlags },
-    { name: "Logout", link: "/", icon: IoIosLogOut },
+  
+
+
   ];
   const [open, setOpen] = useState(true);
   return (
@@ -59,7 +67,13 @@ const AdminSidebar = () => {
               </h2>
             </Link>
           ))}
+          <Link to="/admin/" className="flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded-md">
+             <IoIosLogOut/>
+              <h2 onClick={handleLogout}>Logout</h2>
+            </Link>
+    
         </div>
+      
       </div>
    
     </section>

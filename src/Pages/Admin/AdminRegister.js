@@ -1,32 +1,50 @@
-import React, { useState} from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function AdminRegister() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    userName: '',
-    name: '',
-    mobile: '',
-    email: '',
-    password: '',
+    userName: "",
+    name: "",
+    mobile: "",
+    email: "",
+    password: "",
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const response = await axios.post('http://localhost:8000/api/admin/register', formData);
-    console.log('Response:', response.data);
-    navigate('/admin/home');
-  } catch (error) {
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/admin/register",
+        formData
+      );
+      console.log("Response:", response.data);
 
-};
+      toast.success("Registration successful!", {
+        position: toast.POSITION.TOP_CENTER,
+      });
 
+      navigate("/admin/home");
+    } catch (error) {
+      console.error("Error:", error);
+
+      toast.error(
+        error?.response?.data?.msg ||
+          error?.message ||
+          "Something went wron ! please try again",
+        {
+          position: toast.POSITION.TOP_CENTER,
+        }
+      );
+    }
+  };
 
   return (
     <div>
@@ -37,7 +55,9 @@ const handleSubmit = async (e) => {
             className="w-40 h-40 mx-auto"
             alt="Logo"
           />
-          <h1 className="text-3xl text-center text-gray-900 font-bold">Welcome, Register Here!</h1>
+          <h1 className="text-3xl text-center text-gray-900 font-bold">
+            Welcome, Register Here!
+          </h1>
           <form className="mt-6" onSubmit={handleSubmit}>
             <div className="mb-2">
               <label
@@ -70,25 +90,25 @@ const handleSubmit = async (e) => {
               />
             </div>
             <label
-                htmlFor="userName"
-                className="block text-sm font-semibold text-gray-900"
-              >
-   Mobile
-              </label>
+              htmlFor="userName"
+              className="block text-sm font-semibold text-gray-900"
+            >
+              Mobile
+            </label>
             <input
-  type="tel"
-  name="mobile"
-  value={formData.mobile}
-  onChange={handleChange}
-  className="block w-full px-4 py-2 mt-2 text-gray-900 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
-/>
+              type="tel"
+              name="mobile"
+              value={formData.mobile}
+              onChange={handleChange}
+              className="block w-full px-4 py-2 mt-2 text-gray-900 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+            />
 
             <div className="mb-2">
               <label
                 htmlFor="userName"
                 className="block text-sm font-semibold text-gray-900"
               >
-        Email
+                Email
               </label>
               <input
                 type="email"
@@ -103,7 +123,7 @@ const handleSubmit = async (e) => {
                 htmlFor="userName"
                 className="block text-sm font-semibold text-gray-900"
               >
-            Password
+                Password
               </label>
               <input
                 type="password"
@@ -113,7 +133,6 @@ const handleSubmit = async (e) => {
                 className="block w-full px-4 py-2 mt-2 text-gray-900 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>
-         
 
             <div className="mt-6">
               <button
@@ -126,6 +145,7 @@ const handleSubmit = async (e) => {
           </form>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }
