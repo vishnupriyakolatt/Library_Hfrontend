@@ -17,7 +17,7 @@ function ProfileTransaction() {
 
     const sendRequest = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/book/viewtransaction', {
+        const response = await axios.get('http://localhost:8800/api/book/viewtransaction', {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -27,6 +27,9 @@ function ProfileTransaction() {
         const data = response.data;
         setBookOrders(data.transaction);
       } catch (err) {
+        if(err.response.status===403){
+          navigate('/login')
+        }
         console.error(err);
         throw new Error('Failed to fetch transactions');
       }

@@ -3,25 +3,42 @@ import Header from "../../Components/Header";
 import Background from "../../assets/background1.jpg";
 
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 function AllBooks() {
   const [books, setBooks] = useState([]);
-
+const navigate=useNavigate()
   useEffect(() => {
-    fetchBooks();
+    ;
   }, []);
-
+ 
+  useEffect (()=>{
+    const token = localStorage.getItem('userToken');
+    if (!token) {
+      navigate('/login');
+    }
   const fetchBooks = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/api/book/viewbook"
+        "http://localhost:8800/api/book/viewbook",{
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+
+        }
       );
       console.log(response);
       const data = response.data;
       setBooks(data);
     } catch (error) {
+      if(error.response.status===403){
+        navigate('/login')
+      }
       console.error("Error fetching books:", error);
     }
-  };
+  }
+  fetchBooks()
+})
   return (
     <>
       <Header />

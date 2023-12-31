@@ -19,7 +19,7 @@ function Userroute() {
  
   <Routes>
     <Route path='/' element={<MainHome/>}/>
-    <Route path='/login' element={<Login/>}/>
+    <Route path='/login' replace element={<Login/>}/>
     <Route path='/signup' element={<Register/>}/>
     <Route path='/category' element={<CategoryView/>}/>
     <Route path='/allBooks' element={<AllBooks/>}/>

@@ -14,7 +14,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post('http://localhost:8000/api/user/register', {
+      const res = await axios.post('http://localhost:8800/api/user/register', {
         userName,
         name,
         mobile,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import axios from 'axios';
 import { FaTrash } from 'react-icons/fa';
@@ -7,8 +7,15 @@ import AdminSidebar from '../../Components/AdminSidebar';
 
 function Transactionview() {
 const {TransactionId}=useParams()
+const navigate=useNavigate()
   const [transaction, setTransaction] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  useEffect(() => {
+    const token = localStorage.getItem('userToken');
+    if (!token) {
+      navigate('/admin');
+    }
+  }, []); 
 
 
   useEffect(() => {
@@ -19,7 +26,7 @@ const {TransactionId}=useParams()
   const Transactionfetch = async () => {
     try {
 
-      const response = await axios.get('http://localhost:8000/api/book/AdminviewTransaction');
+      const response = await axios.get('http://localhost:8800/api/book/AdminviewTransaction');
       console.log(response)
       const data = response.data;
       setTransaction(data);
@@ -33,7 +40,7 @@ const {TransactionId}=useParams()
   const handleSearch = async () => {
     try {
  
-      const response = await axios.post(`http://localhost:8000/api/book/search?name=${searchTerm}`);
+      const response = await axios.post(`http://localhost:8800/api/book/search?name=${searchTerm}`);
       const data = response.data;
       setTransaction(data);
      

@@ -2,23 +2,38 @@ import React, { useState, useEffect } from 'react';
 import Header from '../../Components/Header';
 import Background from '../../assets/background1.jpg';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function CategoryView() {
   const [categories, setCategories] = useState([]);
+  const navigate=useNavigate()
 
-  useEffect(() => {
-   
+  useEffect (()=>{
+    const token = localStorage.getItem('userToken');
+    if (!token) {
+      navigate('/login');
+    }
+
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/book/viewCategory'); 
+        const response = await axios.get('http://localhost:8800/api/book/viewCategory',{
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }); 
         setCategories(response.data);
       } catch (error) {
+        if(error.response.status===403){
+          navigate('/login')
+        }
         console.error('Error fetching categories:', error);
       }
     };
-
-    fetchCategories();
-  }, []);
+    
+    fetchCategories()
+      .catch((error) => console.error(error));
+  },[ ])
 
   return (
     <>

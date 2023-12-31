@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import AdminSidebar from '../../Components/AdminSidebar';  // Import your AdminSidebar component
@@ -12,12 +12,20 @@ function BookAdd() {
   const [author, setAuthor] = useState("");
   const [image, setImage] = useState(null);
   const [category, setCategory] = useState("");
-
+  const [token,setToken]=useState('')
+  useEffect (()=>{
+    const token = localStorage.getItem('adminToken');
+    setToken(token)
+    if (!token) {
+      navigate('/admin');
+    }
+  },[ ])
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(file);
   };
 
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -29,9 +37,10 @@ function BookAdd() {
     formData.append('category', category);
 
     try {
-      const response = await axios.post('http://localhost:8000/api/book/addbook', formData, {
+      const response = await axios.post('http://localhost:8800/api/book/addbook', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`,
         },
       });
 
@@ -41,6 +50,9 @@ function BookAdd() {
         console.error(response.data.err);
       }
     } catch (error) {
+      if(error.response.status===403){
+        navigate('/login')
+      }
       console.error(error);
       toast.error(
         error?.response?.data?.msg ||
@@ -52,8 +64,6 @@ function BookAdd() {
       );
     }
     }
-  
-
   return (
     <>
       <div className='flex'>

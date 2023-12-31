@@ -2,16 +2,21 @@ import React, { useState, useEffect,useParams } from 'react';
 import axios from 'axios';
 import { FaTrash } from 'react-icons/fa';
 import AdminSidebar from '../../Components/AdminSidebar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function UserView() {
-
+const navigate=useNavigate()
   const [users, setUser] = useState([]);
-
+  useEffect(() => {
+    const token = localStorage.getItem('userToken');
+    if (!token) {
+      navigate('/admin');
+    }
+  }, []); 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/admin/userview');
+        const response = await axios.get('http://localhost:8800/api/admin/userview');
         setUser(response.data);
       } catch (error) {
         console.error("Error fetching users:", error);

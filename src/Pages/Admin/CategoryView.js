@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AdminSidebar from "../../Components/AdminSidebar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function CategoryView() {
   const [books, setBooks] = useState([]);
+const navigate=useNavigate()
+
+  useEffect(() => {
+    const token = localStorage.getItem('userToken');
+    if (!token) {
+      navigate('/admin');
+    }
+  }, []); 
 
   useEffect(() => {
     fetchBooks();
@@ -13,7 +21,7 @@ function CategoryView() {
   const fetchBooks = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/api/book/viewCategory"
+        "http://localhost:8800/api/book/viewCategory"
       );
       const data = response.data;
       setBooks(data);

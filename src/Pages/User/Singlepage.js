@@ -2,28 +2,46 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../../Components/Header'
 import Background from "../../assets/background1.jpg";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 function Singlepage() {
     const[book,setBook]=useState({})
 const id=useParams()
+const navigate=useNavigate()
+
+
+useEffect (()=>{
+  const token = localStorage.getItem('userToken');
+  if (!token) {
+    navigate('/login');
+  }
 const getsingleBook = async (id) => {
     try {
  
-        const response = await axios.post(`http://localhost:8000/api/book/search?name=${id}`);
+        const response = await axios.post(`http://localhost:8800/api/book/search?name=${id}`,{
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
       console.log(response)
       const data = response.data;
       setBook(data[0]);
       
      
     } catch (error) {
-      console.error('Error searching books:', error);
+      if(error.response.status===403){
+        navigate('/login')
+      }
+      console.error('Error fetching books:', error);
+    }
+      
    
     }
-  };
-    useEffect(()=>{
-        getsingleBook(id)
-    },[])
+  
+  getsingleBook()
+  .catch((error) => console.error(error));
+},[ ])
   return (
 <>
 <Header/>
@@ -38,22 +56,7 @@ const getsingleBook = async (id) => {
         }}
       /> 
 
-        {/* <div className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-          <img
-            className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
-            src={book.image}
-            alt=""
-          />
-          <div className="flex flex-col justify-between p-4 leading-normal">
-          <label>Name o</label>
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            {book.name}
-            </h5>
-            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-             {book.author}
-            </p>
-          </div>
-        </div> */}
+        
 <div class="flex flex-col mx-auto rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 md:max-w-2xl md:flex-row mt-4">
   <div class="flex flex-col justify-start p-6">
     <img

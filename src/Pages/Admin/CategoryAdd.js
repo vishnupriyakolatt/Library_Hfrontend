@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AdminSidebar from "../../Components/AdminSidebar";
@@ -8,6 +8,13 @@ function CategoryAdd() {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
 
+  useEffect(() => {
+    const token = localStorage.getItem('userToken');
+    if (!token) {
+      navigate('/admin');
+    }
+  }, []); 
+
   const addCategory = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -15,7 +22,7 @@ function CategoryAdd() {
     formData.append('file', image);
 
     try {
-      const response = await axios.post('http://localhost:8000/api/book/addcategory', formData, {
+      const response = await axios.post('http://localhost:8800/api/book/addcategory', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

@@ -2,22 +2,25 @@ import React, { useState, useEffect,useParams } from 'react';
 import axios from 'axios';
 import { FaTrash } from 'react-icons/fa';
 import AdminSidebar from '../../Components/AdminSidebar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function BookView() {
 
   const [books, setBooks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-
-
-  useEffect(() => {
+  const navigate=useNavigate()
+  useEffect (()=>{
+    const token = localStorage.getItem('userToken');
     fetchBooks();
+    if (!token) {
+      navigate('/admin');
+    }
   }, []);
 
   const fetchBooks = async () => {
     try {
 
-      const response = await axios.get('http://localhost:8000/api/book/viewbook');
+      const response = await axios.get('http://localhost:8800/api/book/viewbook');
       console.log(response)
       const data = response.data;
       setBooks(data);
@@ -31,7 +34,7 @@ function BookView() {
   const handleSearch = async () => {
     try {
  
-      const response = await axios.post(`http://localhost:8000/api/book/search?name=${searchTerm}`);
+      const response = await axios.post(`http://localhost:8800/api/book/search?name=${searchTerm}`);
       const data = response.data;
       setBooks(data);
      
@@ -44,7 +47,7 @@ function BookView() {
   const handleDelete = async (bookId) => {
     try {
       console.log('Deleting book with ID:', bookId);
-      await axios.delete(`http://localhost:8000/api/book/delete/${bookId}`);
+      await axios.delete(`http://localhost:8800/api/book/delete/${bookId}`);
       fetchBooks(); // Fetch the updated list of books after deletion
     } catch (error) {
       console.error('Error deleting book:', error);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 import Background from "../../assets/background1.jpg";
@@ -11,27 +11,40 @@ import {  useNavigate } from "react-router-dom";
 
 
 function UserHome() {
+  
+  
+const[token,setToken]=useState('')
   const [searchTerm, setSearchTerm] = useState('');
   const navigate=useNavigate()
-  const handleSearch = async () => {
-    if(!searchTerm)
-    alert('Please search');
-    try {
- 
-      const response = await axios.post(`http://localhost:8000/api/book/search?name=${searchTerm}`);
-      console.log(response)
-      const data = response.data;
-      // setBooks(data);
-      if(data[0])
-      navigate(`/singlebook/${data[0]._id}`)
-      
-     
-    } catch (error) {
-      console.error('Error searching books:', error);
-   
-    }
-  };
 
+
+const handleSearch = async () => {
+  if(!searchTerm)
+  alert('Please search');
+  try {
+
+    const response = await axios.post(`http://localhost:8800/api/book/search?name=${searchTerm}`,{
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log(response)
+    const data = response.data;
+    // setBooks(data);
+    if(data[0])
+    navigate(`/singlebook/${data[0]._id}`)
+    
+   
+  } catch (error) {
+    if(error.response.status===403){
+      navigate('/login')
+    }
+    console.error('Error searching books:', error);
+ 
+  }
+
+};
   return (
     <>
      

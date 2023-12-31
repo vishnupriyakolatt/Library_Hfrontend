@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AdminSidebar from '../../Components/AdminSidebar';
+import { useNavigate } from 'react-router-dom';
 
 function Transaction() {
   const [ISBN, setISBN] = useState('');
   const [userEmail, setUserEmail] = useState('');
-
+  const navigate=useNavigate()
+  useEffect(() => {
+    const token = localStorage.getItem('userToken');
+    if (!token) {
+      navigate('/admin');
+    }
+  }, []); 
   const handleTransaction = async (action) => {
     try {
-      const response = await axios.post('http://localhost:8000/api/book/transaction', {
+      const response = await axios.post('http://localhost:8800/api/book/transaction', {
         ISBN,
         userEmail,
         action,

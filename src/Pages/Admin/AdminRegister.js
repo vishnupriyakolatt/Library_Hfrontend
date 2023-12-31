@@ -22,7 +22,7 @@ function AdminRegister() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/admin/register",
+        "http://localhost:8800/api/admin/register",
         formData
       );
       console.log("Response:", response.data);
