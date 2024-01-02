@@ -3,36 +3,38 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+import useAxiosInstance from '../../axios/interceptor';
+
 const Register = () => {
-  const [userName, setUserName] = useState('');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [mobile, setMobile] = useState('');
   const navigate = useNavigate();
+  const { axiosInstance } = useAxiosInstance();
 
-  const handleRegister = async (e) => {
+  const [formData, setFormData] = useState({
+    userName: '',
+    name: '',
+    mobile: '',
+    email: '',
+    password: '',
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const res = await axios.post('http://localhost:8800/api/user/register', {
-        userName,
-        name,
-        mobile,
-        email,
-        password,
+      const response = await axiosInstance.post('/user/register', formData);
+      console.log('Response:', response.data);
+
+      toast.success('Registration successful!', {
+        position: toast.POSITION.TOP_CENTER,
       });
 
       navigate('/login');
     } catch (error) {
-      toast.error(
-        error?.response?.data?.msg ||
-          error?.message ||
-          'Something went wrong ! please try again',
-        {
-          position: toast.POSITION.TOP_CENTER,
-        }
-      );
+    
       console.error(error.response.data);
     }
   };
@@ -50,7 +52,7 @@ const Register = () => {
             </div>
             <div className='lg:w-7/12 flex items-center'>
               <div className='card-body p-4 p-lg-5 text-gray-800 w-full'>
-                <form className='max-w-md mx-auto bg-gray-200 p-8 px-8 rounded-lg'>
+                <form className='max-w-md mx-auto bg-gray-200 p-8 px-8 rounded-lg'onSubmit={handleSubmit}>
                   <h2 className='text-4xl dark:text-white font-bold text-center'>
                     REGISTER HERE
                   </h2>
@@ -59,7 +61,8 @@ const Register = () => {
                     <input
                       className='rounded-lg'
                       type='text'
-                      onChange={(e) => setUserName(e.target.value)}
+                      value={formData.userName}
+                      onChange={handleChange}
                       name='userName'
                     />
                   </div>
@@ -68,7 +71,8 @@ const Register = () => {
                     <input
                       className='rounded-lg'
                       type='text'
-                      onChange={(e) => setName(e.target.value)}
+                      value={formData.name}
+                      onChange={handleChange}
                       name='name'
                     />
                   </div>
@@ -77,7 +81,8 @@ const Register = () => {
                     <input
                       className='rounded-lg'
                       type='mobile'
-                      onChange={(e) => setMobile(e.target.value)}
+                      value={formData.mobile}
+                      onChange={handleChange}
                       name='mobile'
                     />
                   </div>
@@ -86,7 +91,8 @@ const Register = () => {
                     <input
                       className='rounded-lg'
                       type='email'
-                      onChange={(e) => setEmail(e.target.value)}
+                      value={formData.email}
+                      onChange={handleChange}
                       name='email'
                     />
                   </div>
@@ -95,14 +101,15 @@ const Register = () => {
                     <input
                       className='rounded-lg'
                       type='password'
-                      onChange={(e) => setPassword(e.target.value)}
+                      value={formData.password}
+                      onChange={handleChange}
                       name='password'
                     />
                   </div>
                   <button
                     className='bg-black text-white font-bold py-2 px-4 rounded'
                     type='submit'
-                    onClick={handleRegister}
+                  
                   >
                     REGISTER
                   </button>

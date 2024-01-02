@@ -1,33 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import Header from '../../Components/Header';
-import Background from '../../assets/background1.jpg';
 import { useParams } from 'react-router-dom';
 import useAxiosInstance from '../../axios/interceptor';
-
+import { useEffect, useState } from 'react';
+import Header from '../../Components/Header';
+import Background from '../../assets/background1.jpg';
 function Singlepage() {
   const [book, setBook] = useState({});
-  const { id } = useParams();
+  const { name } = useParams();
   const { axiosInstance } = useAxiosInstance();
 
+  const getsingleBook = async () => {
+    try {
+      const response = await axiosInstance.get(`/book/singlebook/${name}`);
+      const data = response.data;
+      setBook(data);
+    } catch (error) {
+      console.error('Error fetching book details:', error.response?.data || error.message);
+    }
+  };
+
   useEffect(() => {
-    const getsingleBook = async () => {
-      try {
-        const response = await axiosInstance.get(`/book/search?name=${id}`);
-        const data = response.data;
-
-        console.log('Fetched data:', data);
-
-        setBook(data[0]);
-      } catch (error) {
-        console.error('Error fetching books:', error);
-      }
-    };
-
+    console.log("Fetching book for name:", name);
     getsingleBook();
-  }, [id]);
+  }, [name]);
+  
   return (
     <>
-      <Header />
+      <Header/>
       <div
         className='h-60  flex flex-col items-center'
         style={{

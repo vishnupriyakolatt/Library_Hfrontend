@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+
 import AdminSidebar from '../../Components/AdminSidebar';
 import { Link, useNavigate } from 'react-router-dom';
 import useAxiosInstance from '../../axios/interceptor';
