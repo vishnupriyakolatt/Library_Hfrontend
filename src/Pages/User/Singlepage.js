@@ -3,24 +3,29 @@ import Header from '../../Components/Header';
 import Background from '../../assets/background1.jpg';
 import { useParams } from 'react-router-dom';
 import useAxiosInstance from '../../axios/interceptor';
+
 function Singlepage() {
   const [book, setBook] = useState({});
-  const id = useParams();
+  const { id } = useParams();
   const { axiosInstance } = useAxiosInstance();
 
   useEffect(() => {
-    const getsingleBook = async (id) => {
+    const getsingleBook = async () => {
       try {
-        const response = await axiosInstance.get('/book/search?name=' + id);
+        const response = await axiosInstance.get(`/book/search?name=${id}`);
         const data = response.data;
+
+        console.log('Fetched data:', data);
+
         setBook(data[0]);
       } catch (error) {
         console.error('Error fetching books:', error);
       }
     };
+
     getsingleBook();
-  });
-  return book ? (
+  }, [id]);
+  return (
     <>
       <Header />
       <div
@@ -80,9 +85,7 @@ function Singlepage() {
         </div>
       </div>
     </>
-  ) : (
-    <div>nothing to show</div>
-  );
+  )
 }
 
 export default Singlepage;

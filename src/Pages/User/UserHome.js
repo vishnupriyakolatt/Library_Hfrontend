@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
 
-import axios from 'axios';
 import Background from '../../assets/background1.jpg';
-
 import searchIcon from '../../assets/search-icon.svg';
 import { heroSubtitle, heroTitle } from '../../data';
 
 import Frame from '../../Components/Frame';
 import { useNavigate } from 'react-router-dom';
-import useAxiosInstance from '../../axios/interceptor';
+
 
 function UserHome() {
   const [searchTerm, setSearchTerm] = useState('');
+
   const navigate = useNavigate();
 
   const handleSearch = async () => {
     if (!searchTerm) return alert('Please search');
-    navigate(`/singlebook/${searchTerm}`)
+    navigate(`/singlebook?name=${searchTerm}`);
   };
+ 
   return (
     <>
       <div
