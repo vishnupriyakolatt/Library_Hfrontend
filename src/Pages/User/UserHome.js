@@ -3,19 +3,34 @@ import React, { useEffect, useState } from 'react';
 import Background from '../../assets/background1.jpg';
 import searchIcon from '../../assets/search-icon.svg';
 import { heroSubtitle, heroTitle } from '../../data';
-
+import useAxiosInstance from '../../axios/interceptor';
 import Frame from '../../Components/Frame';
 import { useNavigate } from 'react-router-dom';
 
 
 function UserHome() {
   const [searchTerm, setSearchTerm] = useState('');
-
+  const { axiosInstance } = useAxiosInstance();
+  const [book, setBook] = useState({});
   const navigate = useNavigate();
 
   const handleSearch = async () => {
-    if (!searchTerm) return alert('Please search');
-    navigate(`/singlebook?name=${searchTerm}`);
+    console.log(searchTerm)
+  
+    if (!searchTerm)return alert('Please search');
+
+    try {
+      const response = await axiosInstance.get(`/book/search`, { params: { name: searchTerm } });
+
+      console.log(response)
+      const data = response.data;
+    console.log(data)
+    navigate(`/singlebook/${data[0]?._id}`);
+      
+    } catch (error) {
+      console.error('Error fetching book details:', error.response?.data || error.message);
+    }
+    // navigate(`/singlebook?name=${searchTerm}`);
   };
  
   return (
